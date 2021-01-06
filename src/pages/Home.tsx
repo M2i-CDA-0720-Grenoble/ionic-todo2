@@ -1,14 +1,21 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
+import TodoList from '../components/TodoList';
+import { TodoModel } from '../models';
 import './Home.css';
 
 const Home: React.FC = () => {
+  const todos: TodoModel[] = [
+    { text: 'Bananes', done: false },
+    { text: 'Chocolat', done: false },
+    { text: 'Poires', done: false },
+  ];
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Todos</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -17,7 +24,11 @@ const Home: React.FC = () => {
             <IonTitle size="large">Blank</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+
+        <TodoList
+          todos={todos}
+        />
+
       </IonContent>
     </IonPage>
   );
