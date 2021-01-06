@@ -3,6 +3,7 @@ import React, { FC, useContext, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { TodoContext } from "../contexts";
 import { TodoModel } from "../models";
+import './Todo.css';
 
 interface TodoProps {
   todo: TodoModel,
@@ -70,7 +71,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
             checked={todo.done}
             onIonChange={(event) => changeTodoDone(event.detail.checked)}
           />
-          <IonLabel>{todo.text}</IonLabel>
+          <IonLabel className={'Todo-text' + (todo.done ? ' done' : '')}>{todo.text}</IonLabel>
 
           <IonButton
             color="secondary"
