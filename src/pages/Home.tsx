@@ -25,6 +25,7 @@ const AddTodoForm: FC<AddTodoFormProps> = () => {
       text,
       done: false,
     });
+    setText('');
   }
 
   return (
@@ -57,10 +58,17 @@ const Home: React.FC = () => {
     );
   }
 
+  const updateTodo = (id: number, updatedTodo: TodoModel): void => {
+    setTodos(
+      todos.map( todo => todo.id === id ? updatedTodo : todo )
+    )
+  }
+
   const contextValue = {
     todos,
     addTodo,
     deleteTodo,
+    updateTodo,
   };
 
   return (
