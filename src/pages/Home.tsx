@@ -1,24 +1,27 @@
 import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import TodoList from '../components/TodoList';
+import { TodoContext } from '../contexts';
 import { TodoModel } from '../models';
 import './Home.css';
 
 const defaultTodos: TodoModel[] = [
-  { text: 'Bananes', done: false },
-  { text: 'Chocolat', done: false },
-  { text: 'Poires', done: false },
+  { id: 1, text: 'Bananes', done: false },
+  { id: 2, text: 'Chocolat', done: false },
+  { id: 3, text: 'Poires', done: false },
 ];
 
-interface AddTodoFormProps {
-  addTodo: (newTodo: TodoModel) => void,
-}
+interface AddTodoFormProps { }
 
-const AddTodoForm: FC<AddTodoFormProps> = ({ addTodo }) => {
+const AddTodoForm: FC<AddTodoFormProps> = () => {
+  const { addTodo } = useContext(TodoContext);
+
   const [text, setText] = useState('');
 
   const handleClick = () => {
     addTodo({
+      // TODO: créer un système de gestion des ID
+      id: Math.random(),
       text,
       done: false,
     });
@@ -48,6 +51,18 @@ const Home: React.FC = () => {
     ]);
   }
 
+  const deleteTodo = (id: number): void => {
+    setTodos(
+      todos.filter( todo => todo.id !== id )
+    );
+  }
+
+  const contextValue = {
+    todos,
+    addTodo,
+    deleteTodo,
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -62,13 +77,11 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <TodoList
-          todos={todos}
-        />
+        <TodoContext.Provider value={contextValue}>
+          <TodoList />
 
-        <AddTodoForm
-          addTodo={addTodo}
-        />
+          <AddTodoForm />
+        </TodoContext.Provider>
 
       </IonContent>
     </IonPage>

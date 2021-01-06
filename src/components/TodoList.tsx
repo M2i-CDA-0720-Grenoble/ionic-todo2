@@ -1,21 +1,23 @@
 import { IonList } from "@ionic/react";
-import React, { FC } from "react";
-import { TodoModel } from "../models";
+import React, { FC, useContext } from "react";
+import { TodoContext } from "../contexts";
 import Todo from "./Todo";
 
-interface TodoListProps {
-  todos: TodoModel[],
-}
+interface TodoListProps { }
 
-const TodoList: FC<TodoListProps> = ({ todos }) =>
-  <IonList>
-    {
-      todos.map(
-        (todo, index) =>
-          <Todo key={index} todo={todo} />
-      )
-    }
-  </IonList>
-;
+const TodoList: FC<TodoListProps> = () => {
+  const { todos } = useContext(TodoContext);
+
+  return (
+    <IonList>
+      {
+        todos.map(
+          (todo, index) =>
+            <Todo key={index} todo={todo} />
+        )
+      }
+    </IonList>
+  );
+}
 
 export default TodoList;
